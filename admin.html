@@ -1390,13 +1390,30 @@
             let codeObj = { code: c, date: new Date().toLocaleDateString('ar-EG'), isUsed: false };
             
             if (window.fsData && window.fsData.addCode) {
-                try {
-                    await window.fsData.addCode(codeObj);
-                } catch (er) { console.error("Firebase Add Code Error:", er); }
+                window.fsData.addCode(codeObj).catch(er => console.error("Firebase Add Code Error:", er));
             }
             
             codesList.push(codeObj);
             localStorage.setItem('spedia_codes', JSON.stringify(codesList));
+            
+            // تحديث واجهة المتصفح فوراً بدون انتظار
+            const tCodes = document.getElementById('table-codes');
+            if (tCodes) {
+                let adminType = sessionStorage.getItem('adminType');
+                let codeFilter = document.getElementById('code-filter') ? document.getElementById('code-filter').value : 'all';
+                let filteredList = codesList;
+                if (codeFilter === 'used') filteredList = filteredList.filter(x => x.used || x.isUsed);
+                else if (codeFilter === 'available') filteredList = filteredList.filter(x => !(x.used || x.isUsed));
+                
+                let ths = `<th>الكود</th><th>تاريخ الإنشاء</th><th>التصنيف (متاح/مستخدم)</th>`;
+                if (adminType === 'full') ths += `<th>حذف</th>`;
+                tCodes.innerHTML = `<tr>${ths}</tr>` + filteredList.map(item => {
+                    let statusLabel = (item.used || item.isUsed) ? '<span style="color:#f44336;font-weight:bold;">مستخدم</span>' : '<span style="color:#4caf50;font-weight:bold;">متاح</span>';
+                    let tr = `<td>${item.code}</td><td>${item.date || ''}</td><td>${statusLabel}</td>`;
+                    if (adminType === 'full') tr += `<td><button onclick="window.deleteItemGeneric('codes', '${item.fsId || item.code}', 'spedia_codes', 'code')" style="background:#f44336; color:#fff; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">حذف</button></td>`;
+                    return `<tr>${tr}</tr>`;
+                }).join('');
+            }
             
             if (btn && btn.tagName === 'BUTTON') btn.innerText = "توليد كود عشوائي";
             
