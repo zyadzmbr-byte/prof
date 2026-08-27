@@ -1,0 +1,41 @@
+/* Comprehensive Mobile Adjustments */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    * {
+        max-width: 100vw !important;
+        box-sizing: border-box;
+    }
+    
+    .mega-menu, .discover-container {
+        width: 100% !important;
+        position: static !important;
+        box-shadow: none !important;
+        display: none; /* Usually hidden on mobile, toggled via JS */
+    }
+    
+    .mega-menu.show {
+        display: block !important;
+    }
+    
+    .flex, .grid, .row, .stats-container, .pricing-grid, 
+    .footer-content, .hero-content, .section-split {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 20px !important;
+    }
+    
+    section, .section, .container, .main-content {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
