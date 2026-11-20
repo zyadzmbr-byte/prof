@@ -17,7 +17,6 @@
     --accent-amber: #f59e0b;
     --accent-rose: #f43f5e;
     --whatsapp: #25D366;
-    --youtube: #ff0000;
     
     --bg-main: #f8fafc;
     --bg-card: #ffffff;
@@ -230,26 +229,6 @@ h1, h2, h3, h4, h5, h6 {
     background: #20ba59;
     transform: translateY(-2px);
     box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
-}
-
-.btn-youtube {
-    background: #ff0000;
-    color: #fff !important;
-    padding: 12px 26px;
-    border-radius: var(--radius-full);
-    font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
-    transition: var(--transition);
-}
-
-.btn-youtube:hover {
-    background: #d90000;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(255, 0, 0, 0.4);
 }
 
 /* ==========================================================================
