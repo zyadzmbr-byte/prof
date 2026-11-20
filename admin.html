@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة الإدارة - Spedia</title>
-    <link rel="stylesheet" href="style.css?v=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>لوحة الإدارة - منصة professor التعليمية</title>
+    <link rel="stylesheet" href="style.css?v=12">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -831,7 +831,7 @@
     <!-- Firebase SDKs -->
     <script type="module" src="firebase-init.js"></script>
     <script type="module" src="firebase-data.js"></script>
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=12"></script>
     <script>
         function showSection(id, btn) {
             document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
@@ -1155,7 +1155,7 @@
                 let fileUrl = await window.uploadToCloudinary(file);
                 let fItem = {
                     id: Date.now(),
-                    country: document.getElementById('af-country').value,
+                    country: (document.getElementById('af-country') ? document.getElementById('af-country').value : 'EG'),
                     grade: document.getElementById('af-grade').value,
                     title: document.getElementById('af-title').value,
                     url: fileUrl,
@@ -1567,7 +1567,7 @@
                     id: Date.now(),
                     title: document.getElementById('ex-title').value,
                     grade: document.getElementById('ex-grade').value,
-                    country: document.getElementById('ex-country').value,
+                    country: (document.getElementById('ex-country') ? document.getElementById('ex-country').value : 'EG'),
                     time: document.getElementById('ex-time').value,
                     durationMinutes: document.getElementById('ex-time').value,
                     type: document.getElementById('ex-type').value,
@@ -1672,8 +1672,18 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             if (sessionStorage.getItem('isAdmin') !== 'yes') {
-                window.location.href = 'index.html';
-                return;
+                let pass = prompt("بوابة منصة professor التعليمية للإدارة - يرجى كتابة الرقم السري:");
+                if (pass === "135700") {
+                    sessionStorage.setItem('isAdmin', 'yes');
+                    sessionStorage.setItem('adminType', 'full');
+                } else if (pass === "246800") {
+                    sessionStorage.setItem('isAdmin', 'yes');
+                    sessionStorage.setItem('adminType', 'restricted');
+                } else {
+                    if (pass !== null) alert("الرقم السري غير صحيح!");
+                    window.location.href = 'index.html';
+                    return;
+                }
             }
             let adminType = sessionStorage.getItem('adminType');
             if (adminType === 'restricted') {

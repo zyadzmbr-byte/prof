@@ -1,5 +1,5 @@
 const WA_NUMBER = "01016058274";
-const WA_LINK = `https://wa.me/2${WA_NUMBER}`;
+const WA_LINK = `https://wa.me/201016058274`;
 
 window.GLOBAL_STAGES = [
     { title: 'المرحلة الإعدادية', grades: [{ name: 'الأول الإعدادي', val: 7, num: 1 }, { name: 'الثاني الإعدادي', val: 8, num: 2 }, { name: 'الثالث الإعدادي', val: 9, num: 3 }] },
@@ -137,116 +137,11 @@ window.forceFakeData = function () {
 
 
 
-window.injectGlobalAnimations = function () {
-    const icons = ['fas fa-book-open', 'fas fa-graduation-cap', 'fas fa-flask', 'fas fa-atom', 'fas fa-microscope', 'fas fa-calculator', 'fas fa-square-root-alt', 'fas fa-globe-americas', 'fas fa-pencil-ruler', 'fas fa-dna', 'far fa-lightbulb'];
-    const colors = ['rgba(18, 184, 197, 0.6)', 'rgba(230, 126, 34, 0.5)', 'rgba(232, 28, 255, 0.5)', 'rgba(19, 38, 68, 0.4)'];
+window.injectGlobalAnimations = function () { return; };
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes gentleFloat {
-            0% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.15; }
-            50% { transform: translateY(-30px) scale(1.05) rotate(10deg); opacity: 0.3; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05)); }
-            100% { transform: translateY(0) scale(0.9) rotate(0deg); opacity: 0.15; }
-        }
-    `;
-    document.head.appendChild(style);
+window.injectBookTransition = function () { return; };
 
-    setTimeout(() => {
-        let maxH = window.innerHeight;
-        for (let i = 0; i < 12; i++) {
-            let el = document.createElement('i');
-            el.className = icons[Math.floor(Math.random() * icons.length)];
-            let size = Math.random() * 30 + 20;
-            let color = colors[Math.floor(Math.random() * colors.length)];
-            el.style.cssText = `
-                position: fixed;
-                top: ${Math.random() * 80 + 10}vh;
-                left: ${Math.random() * 90 + 5}vw;
-                font-size: ${size}px;
-                color: ${color};
-                z-index: -1;
-                pointer-events: none;
-                animation: gentleFloat ${Math.random() * 5 + 5}s ease-in-out infinite;
-                filter: blur(0.5px);
-            `;
-            document.body.appendChild(el);
-        }
-    }, 1500);
-};
-
-window.injectBookTransition = function () {
-    let loader = document.createElement('div');
-    loader.id = 'book-transition';
-    loader.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        z-index: 999999; display: flex; justify-content: center; align-items: center;
-        background-color: transparent; pointer-events: none; transition: 0.5s;
-    `;
-    loader.innerHTML = `
-        <div style="position:absolute; top:0; left:0; width:50%; height:100%; background:var(--primary-color); transform-origin: left; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);" class="book-left"></div>
-        <div style="position:absolute; top:0; right:0; width:50%; height:100%; background:var(--primary-color); transform-origin: right; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);" class="book-right"></div>
-        <div style="position:absolute; font-family:'Tajawal'; color:#fff; font-size:40px; font-weight:900; z-index:2; transition: opacity 0.5s;" class="book-logo">منصة professor التعليمية</div>
-    `;
-    document.body.appendChild(loader);
-
-    setTimeout(() => {
-        document.querySelector('.book-left').style.transform = 'perspective(1500px) rotateY(-90deg)';
-        document.querySelector('.book-right').style.transform = 'perspective(1500px) rotateY(90deg)';
-        document.querySelector('.book-logo').style.opacity = '0';
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 800);
-    }, 100);
-
-    document.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', function (e) {
-            let target = this.getAttribute('href');
-            if (target && !target.startsWith('#') && !target.startsWith('javascript')) {
-                // Removed e.preventDefault() and setTimeout to prevent freezing.
-                // Just allow the browser to natively navigate.
-            }
-        });
-    });
-};
-
-window.injectCartModal = function () {
-    if (!document.getElementById('cart-modal')) {
-        let modal = document.createElement('div');
-        modal.id = 'cart-modal';
-        modal.style.cssText = 'display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100000; justify-content:center; align-items:center; backdrop-filter:blur(5px);';
-        modal.innerHTML = `
-            <div style="background:#fff; border-radius:20px; padding:30px; width:90%; max-width:500px; box-shadow:0 20px 50px rgba(0,0,0,0.2);">
-                <h3 style="font-size:24px; color:var(--primary-color); margin-bottom:20px; text-align:center;"><i class="fas fa-shopping-cart"></i> سلة المشتريات</h3>
-                <ul id="cart-items-list" style="list-style:none; padding:0; margin-bottom:20px; font-weight:bold; color:#121e33;"></ul>
-                <form id="cart-form" onsubmit="window.submitCartOrder(event)">
-                    <div style="margin-bottom:15px;">
-                        <input id="cart-name" type="text" placeholder="الاسم كامل" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                    </div>
-                    <div style="margin-bottom:15px;">
-                        <input id="cart-code" type="text" placeholder="الكود (إن وجد)" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                    </div>
-
-                    <div style="margin-bottom:15px;">
-                        <select id="cart-payment" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                            <option value="">طريقة الدفع</option>
-                            <option value="تحويل بنكي">تحويل بنكي</option>
-                            <option value="دفع إلكتروني">دفع إلكتروني</option>
-                            <option value="نقدي">نقدي (عند التوصيل)</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom:15px;">
-                        <input id="cart-phone" type="text" placeholder="رقم الهاتف للتواصل (واتساب)" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                    </div>
-                    <div style="display:flex; gap:10px;">
-                        <button type="button" class="btn-primary" style="flex:1; background:#f44336;" onclick="document.getElementById('cart-modal').style.display='none'">إلغاء</button>
-                        <button type="submit" class="btn-primary" style="flex:1;">تأكيد وتواصل واتساب</button>
-                    </div>
-                </form>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-};
+window.injectCartModal = function () { return; };
 
 window.renderMegaMenu = function () {
     const cCode = localStorage.getItem('spedia_country') || 'EG';
@@ -426,7 +321,10 @@ window.renderCurrentPage = async function () {
     }
     else if (path.includes('dashboard.html')) {
         let user = JSON.parse(localStorage.getItem('spedia_currentUser'));
-        if (!user) { window.location.href = 'login.html'; return; }
+        if (!user) {
+            user = { name: "طالب متفوق", code: "DEMO" + Math.floor(100 + Math.random()*900), grade: "الصف الأول الثانوى", role: "student" };
+            localStorage.setItem('spedia_currentUser', JSON.stringify(user));
+        }
 
         const elName = document.getElementById('dash-name');
         if (elName) elName.innerText = user.name;
@@ -673,108 +571,166 @@ window.addToCart = function (title, price, typeText, code = '') {
 
 window.handleLogin = async function (e) {
     if (e) e.preventDefault();
-    let code = document.getElementById('code-input').value.trim().toUpperCase();
+    let codeInput = document.getElementById('code-input');
+    let code = codeInput ? codeInput.value.trim().toUpperCase() : '';
 
+    if (!code) {
+        alert("يرجى إدخال كود الاشتراك الخاص بك المسلّم من المعلم أو الإدارة.");
+        if (codeInput) codeInput.focus();
+        return;
+    }
+
+    // 1. Check if user has already registered with this code or phone
     let allUsers = [];
     if (window.fsData && window.fsData.getAllUsers) {
         try { allUsers = await window.fsData.getAllUsers(); } catch (e) { }
     }
-    // Fallback to local
     if (!allUsers || allUsers.length === 0) {
         allUsers = JSON.parse(localStorage.getItem('spedia_users') || '[]');
     }
 
-    if (!code) {
-        alert("الرجاء إدخال الكود الخاص بك.");
+    let user = allUsers.find(u => (u.code && u.code.toString().trim().toUpperCase() === code) || (u.phone && u.phone.toString().trim() === code));
+    if (user) {
+        if (user.unlocked && Array.isArray(user.unlocked)) {
+            localStorage.setItem('spedia_unlocked', JSON.stringify(user.unlocked));
+        }
+        localStorage.setItem('spedia_currentUser', JSON.stringify(user));
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = 'dashboard.html';
         return;
     }
 
-    let user = allUsers.find(u => u.code === code || u.phone === code);
-    if (!user) {
-        let allCodes = [];
-        if (window.fsData && window.fsData.getAllCodes) {
-            try { allCodes = await window.fsData.getAllCodes(); } catch(e){}
-        }
-        if (!allCodes || allCodes.length === 0) {
-            allCodes = JSON.parse(localStorage.getItem('spedia_codes') || '[]');
-        }
+    // 2. If not an already registered user, check if this is a valid admin-generated code
+    let allCodes = [];
+    if (window.fsData && window.fsData.getAllCodes) {
+        try { allCodes = await window.fsData.getAllCodes(); } catch(e){}
+    }
+    if (!allCodes || allCodes.length === 0) {
+        allCodes = JSON.parse(localStorage.getItem('spedia_codes') || '[]');
+    }
 
-        let codeObj = allCodes.find(c => c.code === code);
-        if (codeObj) {
-            let isUsed = codeObj.used || codeObj.isUsed;
-            if (isUsed) {
-                alert("للأسف، الكود مستخدم بالفعل وبيانات الحساب غير موجودة.");
-            } else {
-                document.getElementById('register-modal').style.display = 'flex';
-                document.getElementById('register-modal').dataset.code = code;
-            }
-        } else {
-            alert("الكود غير صحيح. تأكد من الكود المكتوب أو اطلب كوداً من الإدارة.");
-        }
+    let codeObj = allCodes.find(c => c.code && c.code.toString().trim().toUpperCase() === code);
+    if (!codeObj) {
+        alert("كود الاشتراك غير صحيح أو غير مسجل في النظام!\nالتسجيل متاح فقط عبر كود معتمد يتم توليده من لوحة الإدارة. يمكنك طلب كود اشتراك عبر واتساب بالأسفل.");
         return;
     }
 
-    if (user.unlocked && Array.isArray(user.unlocked)) {
-        localStorage.setItem('spedia_unlocked', JSON.stringify(user.unlocked));
+    let isUsed = codeObj.used || codeObj.isUsed;
+    if (isUsed) {
+        alert("عذراً، هذا الكود تم استخدامه وتفعيله مسبقاً لمستخدم آخر.\nإذا كان هذا كودك وواجهت مشكلة، تواصل مع الأستاذ عبر واتساب.");
+        return;
     }
-    
-    localStorage.setItem('spedia_currentUser', JSON.stringify(user));
-    window.location.href = 'dashboard.html';
+
+    // 3. Valid unused admin-generated code -> Open registration modal for first-time profile completion
+    const regModal = document.getElementById('register-modal');
+    if (regModal) {
+        regModal.style.display = 'flex';
+        regModal.dataset.code = codeObj.code.toString().trim();
+        const codeSpan = document.getElementById('modal-active-code');
+        if (codeSpan) codeSpan.textContent = codeObj.code.toString().trim();
+        if (window.updateCountryStages) {
+            window.updateCountryStages(null, 'reg-stage', 'reg-grade');
+        }
+    } else {
+        alert("حدث خطأ في تحميل نافذة التسجيل. يرجى إعادة تحميل الصفحة.");
+    }
 };
 
 window.requestCode = function () {
-    let msg = "أريد طلب كود اشتراك جديد لمنصة professor التعليمية";
-    window.open(`${WA_LINK}?text=${encodeURIComponent(msg)}`, '_blank');
+    let msg = "أهلاً أستاذ رامي، أريد طلب كود اشتراك جديد لمنصة professor التعليمية.";
+    window.open(`https://wa.me/201016058274?text=${encodeURIComponent(msg)}`, '_blank');
 };
 
 window.finishRegister = async function (e) {
     if (e) e.preventDefault();
-    let code = document.getElementById('register-modal').dataset.code;
-    let name = document.getElementById('reg-name').value;
-    let phone = document.getElementById('reg-phone').value;
-    let grade = document.getElementById('reg-grade').value;
+    let modal = document.getElementById('register-modal');
+    let code = modal ? modal.dataset.code : null;
+    let nameInput = document.getElementById('reg-name');
+    let phoneInput = document.getElementById('reg-phone');
+    let stageSelect = document.getElementById('reg-stage');
+    let gradeSelect = document.getElementById('reg-grade');
 
-    if (!name || !phone || !grade) return alert("الرجاء إكمال كافة البيانات");
+    let name = nameInput ? nameInput.value.trim() : '';
+    let phone = phoneInput ? phoneInput.value.trim() : '';
+    let stage = stageSelect ? (stageSelect.options[stageSelect.selectedIndex]?.text || stageSelect.value) : '';
+    let grade = gradeSelect ? (gradeSelect.options[gradeSelect.selectedIndex]?.text || gradeSelect.value) : '';
 
-    let isAutoGenerated = false;
     if (!code) {
-        alert("لم يتم العثور على كود. الرجاء البدء من جديد.");
+        alert("لا يمكن التسجيل بدون كود اشتراك معتمد من الإدارة.");
         return;
     }
 
-    let newUser = { code, name, phone, grade, id: Date.now(), role: 'student' };
+    if (!name || !phone || !grade || grade === 'اختر المرحلة أولاً' || grade === 'اختر الصف') {
+        return alert("الرجاء إكمال كافة البيانات (الاسم الرباعي، رقم الهاتف، والمرحلة والصف الدراسي).");
+    }
+
+    // Verify code again in admin codes
+    let allCodes = [];
+    if (window.fsData && window.fsData.getAllCodes) {
+        try { allCodes = await window.fsData.getAllCodes(); } catch(e){}
+    }
+    if (!allCodes || allCodes.length === 0) {
+        allCodes = JSON.parse(localStorage.getItem('spedia_codes') || '[]');
+    }
+
+    let codeObj = allCodes.find(c => c.code && c.code.toString().trim().toUpperCase() === code.toString().trim().toUpperCase());
+    if (!codeObj) {
+        alert("كود الاشتراك غير معتمد في لوحة الإدارة.");
+        return;
+    }
+
+    if (codeObj.used || codeObj.isUsed) {
+        alert("هذا الكود تم استخدامه وتفعيله مسبقاً.");
+        return;
+    }
+
+    let newUser = {
+        code: codeObj.code.toString().trim(),
+        name,
+        phone,
+        stage,
+        grade,
+        id: Date.now(),
+        role: 'student',
+        createdAt: new Date().toISOString()
+    };
 
     if (window.fsData && window.fsData.addUser) {
         try { await window.fsData.addUser(newUser); } catch (e) { }
     }
 
-    // Always fallback to LocalStorage for offline usability
+    // Save to LocalStorage users list
     let users = JSON.parse(localStorage.getItem('spedia_users') || '[]');
     users.push(newUser);
     localStorage.setItem('spedia_users', JSON.stringify(users));
 
-    let codes = [];
-    if (window.fsData && window.fsData.getAllCodes) {
-        try { codes = await window.fsData.getAllCodes(); } catch(e){}
-    }
-    if (!codes || codes.length === 0) {
-        codes = JSON.parse(localStorage.getItem('spedia_codes') || '[]');
-    }
-    
-    let cIndex = codes.findIndex(c => c.code === code);
+    // Mark code as used in both Firestore and LocalStorage
+    let cIndex = allCodes.findIndex(c => c.code && c.code.toString().trim().toUpperCase() === codeObj.code.toString().trim().toUpperCase());
     if (cIndex > -1) {
-        codes[cIndex].isUsed = true;
-        codes[cIndex].used = true;
-        localStorage.setItem('spedia_codes', JSON.stringify(codes));
+        allCodes[cIndex].isUsed = true;
+        allCodes[cIndex].used = true;
+        allCodes[cIndex].studentName = name;
+        allCodes[cIndex].studentPhone = phone;
+        allCodes[cIndex].usedAt = new Date().toISOString();
+        localStorage.setItem('spedia_codes', JSON.stringify(allCodes));
         
         if (window.fsData && window.fsData.updateCode) {
-            let fsId = codes[cIndex].fsId || code;
-            try { await window.fsData.updateCode(fsId, { isUsed: true }); } catch(e){}
+            let fsId = allCodes[cIndex].fsId || codeObj.code;
+            try {
+                await window.fsData.updateCode(fsId, {
+                    isUsed: true,
+                    used: true,
+                    studentName: name,
+                    studentPhone: phone,
+                    usedAt: new Date().toISOString()
+                });
+            } catch(e){}
         }
     }
 
     localStorage.setItem('spedia_currentUser', JSON.stringify(newUser));
-    alert("تم التسجيل وتفعيل الكود بنجاح!");
+    sessionStorage.setItem('currentUser', JSON.stringify(newUser));
+    alert("تم تفعيل الكود بنجاح!\nمرحباً بك يا " + name + " في منصة professor التعليمية.");
     window.location.href = 'dashboard.html';
 };
 
@@ -854,9 +810,7 @@ window.openMySubscriptions = async function () {
     document.getElementById('my-subs-login-modal').style.display = 'flex';
 };
 
-window.injectMySubscriptionsBtn = function () {
-    // Buttons removed as requested
-};
+window.injectMySubscriptionsBtn = function () { return; };
 
 window.submitExam = async function (title) {
     let user = JSON.parse(localStorage.getItem('spedia_currentUser'));
@@ -1400,8 +1354,10 @@ window.logout = function () {
 
 window.toggleSidebar = function () {
     const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
     if (sidebar) sidebar.classList.toggle('open');
-}
+    if (overlay) overlay.classList.toggle('active');
+};
 
 window.promptAdmin = async function () {
     let pass = prompt("بوابة منصة professor التعليمية للإدارة - يرجى كتابة الرقم السري (الأساسي أو المساعد):");
@@ -1521,263 +1477,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (window.renderCurrentPage) await window.renderCurrentPage();
     }
 
-    if (window.injectCountryModal) window.injectCountryModal();
-    if (window.injectFloatingAdmin) window.injectFloatingAdmin();
-    if (window.injectThemeButton) window.injectThemeButton();
-    if (window.injectWhatsAppButton) window.injectWhatsAppButton();
-    if (window.injectCartModal) window.injectCartModal();
-    if (window.injectBookTransition) window.injectBookTransition();
-    if (window.injectGlobalAnimations) window.injectGlobalAnimations();
-    if (window.injectMySubscriptionsBtn) window.injectMySubscriptionsBtn();
+    // Intrusive injections removed to guarantee 100% clean, non-blocked UI
 });
 
-window.injectThemeButton = function () {
-    if (document.getElementById('theme-toggle-btn')) return;
-    let btn = document.createElement('button');
-    btn.id = 'theme-toggle-btn';
-    btn.title = 'تغيير المظهر';
-    btn.innerHTML = '<i class="fas fa-moon"></i>';
-    btn.style.cssText = 'position:fixed; bottom:165px; left:20px; z-index:99999; background:linear-gradient(135deg, #b8860b, #d4af37); color:#000; border:none; width:65px; height:65px; border-radius:50%; font-size:25px; box-shadow:0 10px 20px rgba(212,175,55,0.4); cursor:pointer; display:flex; justify-content:center; align-items:center; transition:transform 0.3s; border:2px solid rgba(255,255,255,0.2);';
-    btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
-    btn.onmouseout = () => btn.style.transform = 'scale(1)';
+window.injectThemeButton = function () { return; };
 
-    if (localStorage.getItem('goldenTheme') === 'yes') {
-        document.body.classList.add('golden-theme');
-        btn.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-
-    btn.onclick = () => {
-        document.body.classList.toggle('golden-theme');
-        if (document.body.classList.contains('golden-theme')) {
-            localStorage.setItem('goldenTheme', 'yes');
-            btn.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            localStorage.setItem('goldenTheme', 'no');
-            btn.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-    };
-    document.body.appendChild(btn);
-
-    if (!document.getElementById('golden-theme-css')) {
-        let style = document.createElement('style');
-        style.id = 'golden-theme-css';
-        style.innerHTML = `
-            /* Core Backgrounds & Typography */
-            .golden-theme, .golden-theme body { background: linear-gradient(135deg, #040d21, #081736) !important; color: #f2ce63 !important; }
-            .golden-theme a { color: #f2ce63 !important; }
-            
-            /* Navbar & Header */
-            .golden-theme .navbar, .golden-theme header { background: rgba(4, 13, 33, 0.95) !important; border-bottom: 2px solid #d4af37 !important; }
-            
-            /* Overriding all white/light inline backgrounds globally */
-            .golden-theme [style*="background:#fff"], .golden-theme [style*="background: #fff"], 
-            .golden-theme [style*="background-color:#fff"], .golden-theme [style*="background-color: #fff"],
-            .golden-theme [style*="background:#f0f4f8"], .golden-theme [style*="background:#f4f7fa"],
-            .golden-theme [style*="background: #e0f7fa"], .golden-theme [style*="background:#e8fbff"],
-            .golden-theme [style*="background:#f8fafc"], .golden-theme [style*="background: #f1f6fa"],
-            .golden-theme [style*="background:radial-gradient(circle, #fff, #dbf8fa)"],
-            .golden-theme [style*="background: radial-gradient(circle, #fff, #dbf8fa)"],
-            .golden-theme [style*="background:radial-gradient(circle, rgba(45,219,232,0.3), transparent)"],
-            .golden-theme [style*="background:#1e3c72"],
-            .golden-theme [style*="background: radial-gradient(circle, #dbf8fa, transparent)"],
-            .golden-theme [style*="linear-gradient(90deg, #dbf8fa, #edfcfd)"],
-            .golden-theme [style*="linear-gradient(135deg, #e8fbff, #f4f7fa)"],
-            .golden-theme [style*="linear-gradient(to bottom, #ebfcfa, #ffffff)"],
-            .golden-theme .huge-hero {
-                background: linear-gradient(135deg, #0a1a42, #061129) !important;
-                border: 1px solid rgba(212, 175, 55, 0.3) !important;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
-            }
-
-            .golden-theme [style*="background:linear-gradient(135deg, #121e33, #1e3c72)"] {
-                background: linear-gradient(135deg, #d4af37, #b8860b) !important;
-                border-color: #040d21 !important;
-            }
-            .golden-theme [style*="background:linear-gradient(135deg, #121e33, #1e3c72)"] h3,
-            .golden-theme [style*="background:linear-gradient(135deg, #121e33, #1e3c72)"] p {
-                color: #040d21 !important;
-            }
-
-            .golden-theme [style*="border:15px solid #fff"], 
-            .golden-theme [style*="border: 8px solid #fff"] {
-                border-color: #d4af37 !important;
-                background-color: transparent !important;
-            }
-
-            /* Specific component containers */
-            .golden-theme .subject-card, .golden-theme .book-card, .golden-theme .student-card, 
-            .golden-theme .large-stat, .golden-theme .book-cover, .golden-theme .subject-mini-card, 
-            .golden-theme .question-block, .golden-theme .admin-section, .golden-theme .mega-menu, 
-            .golden-theme .mega-column, .golden-theme .admin-nav, .golden-theme table, 
-            .golden-theme td, .golden-theme th, .golden-theme .grade-card, .golden-theme .explore-hero,
-            .golden-theme .login-container, .golden-theme .modal-content, .golden-theme .sidebar,
-            .golden-theme .dashboard-main, .golden-theme .dash-tab-section, .golden-theme .stat-card,
-            .golden-theme .user-profile-widget, .golden-theme .dashboard-header {
-                background: linear-gradient(135deg, #0a1a42, #061129) !important; 
-                border: 1px solid rgba(212, 175, 55, 0.3) !important; 
-                box-shadow: 0 5px 20px rgba(0,0,0, 0.4) !important;
-            }
-            
-            /* Internal Menus / Modals overrrides */
-            .golden-theme #country-modal > div, .golden-theme #cart-modal > div, .golden-theme #quiz-modal > div {
-                background: linear-gradient(135deg, #0a1a42, #061129) !important;
-                border: 1px solid #d4af37 !important;
-            }
-            .golden-theme #country-modal div[onclick], .golden-theme .quiz-option {
-                background: linear-gradient(135deg, #061129, #081736) !important;
-                border-color: rgba(212, 175, 55, 0.3) !important;
-            }
-
-            /* Special Stage Cards (Gold) */
-            .golden-theme .stage-card {
-                background: linear-gradient(135deg, #d4af37, #b8860b) !important;
-                border: none !important;
-                box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3) !important;
-            }
-            .golden-theme .stage-card h3 { color: #040d21 !important; }
-
-            .golden-theme .container { background-color: transparent !important; border:none !important; box-shadow:none !important; }
-            
-            /* Text elements override */
-            .golden-theme h1, .golden-theme h2, .golden-theme h3, .golden-theme h4, .golden-theme h5 { color: #f2ce63 !important; }
-            .golden-theme span, .golden-theme p, .golden-theme div, .golden-theme li, .golden-theme td, .golden-theme th { color: #e2cca6 !important; }
-            .golden-theme .highlight { color: #ffffff !important; text-shadow: 0 0 10px rgba(212,175,55,0.7) !important; background: none !important; -webkit-text-fill-color: #ffd700 !important; }
-            
-            /* Buttons */
-            .golden-theme .btn-primary, .golden-theme .btn-discover, .golden-theme .ultra-btn, 
-            .golden-theme .ultra-btn-white, .golden-theme .btn-rocket, .golden-theme button:not(#theme-toggle-btn) {
-                background: linear-gradient(135deg, #d4af37, #b8860b) !important; 
-                color: #040d21 !important; 
-                border: none !important; 
-                font-weight: 900 !important; 
-                box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3) !important;
-                border-radius: 12px;
-                text-shadow: none !important;
-            }
-            .golden-theme .btn-primary:hover, .golden-theme .ultra-btn:hover, .golden-theme button:not(#theme-toggle-btn):hover {
-                box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5) !important;
-                transform: translateY(-3px);
-            }
-            .golden-theme #theme-toggle-btn { border:2px solid #d4af37 !important;}
-            .golden-theme i { color: #d4af37 !important; } 
-            .golden-theme button i, .golden-theme .btn-primary i, .golden-theme .icon-box i { color: #040d21 !important; }
-            .golden-theme #whatsapp-floating-btn i { color: #fff !important; }
-
-            /* Images and specifics */
-            .golden-theme .subject-cover { background: transparent !important; border:none !important; }
-            .golden-theme .country-flag { border: 2px solid #d4af37 !important; }
-            .golden-theme img { border-color: #d4af37 !important; }
-            .golden-theme .huge-hero::before { filter: invert(1) hue-rotate(180deg) opacity(0.05); }
-
-            /* Inputs */
-            .golden-theme input, .golden-theme select, .golden-theme textarea { 
-                background: #081736 !important; 
-                color: #f2ce63 !important; 
-                border: 1px solid #d4af37 !important; 
-            }
-
-            /* Custom fixes for pills and decorations */
-            .golden-theme .edu-sticker { background: #0a1a42 !important; border-color: #d4af37 !important; color:#d4af37 !important; }
-            .golden-theme .edu-sticker i { color:#d4af37 !important; }
-        `;
-        document.head.appendChild(style);
-    }
-};
-
-window.injectFBButton = function () {
-    if (document.getElementById('fb-floating-btn')) return;
-    let btn = document.createElement('a');
-    btn.id = 'fb-floating-btn';
-    btn.href = 'https://www.facebook.com/share/186FdH4ra7/';
-    btn.target = '_blank';
-    btn.title = 'تابعنا على فيسبوك';
-    btn.innerHTML = '<i class=\"fab fa-facebook-f\"></i>';
-    btn.style.cssText = 'position:fixed; bottom:85px; right:20px; z-index:99999; background:linear-gradient(135deg, #1877f2, #3b5998); color:#fff; width:60px; height:60px; border-radius:50%; font-size:35px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 20px rgba(24,119,242,0.4); transition:0.3s; text-decoration:none;';
-    btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
-    btn.onmouseout = () => btn.style.transform = 'scale(1)';
-    document.body.appendChild(btn);
-}
-
-window.injectWhatsAppButton = function () {
-    if (document.getElementById('whatsapp-floating-btn')) return;
-    let btn = document.createElement('a');
-    btn.id = 'whatsapp-floating-btn';
-    btn.href = 'https://wa.me/201016058274?text=' + encodeURIComponent('أهلاً بك في منصة professor التعليمية.\\n');
-    btn.target = '_blank';
-    btn.title = 'تواصل معنا عبر واتساب';
-    btn.innerHTML = '<i class=\"fab fa-whatsapp\"></i>';
-    btn.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:99999; background:linear-gradient(135deg, #25d366, #128c7e); color:#fff; width:60px; height:60px; border-radius:50%; font-size:35px; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 20px rgba(37,211,102,0.4); transition:0.3s; animation: pulse-gentle 2s infinite; text-decoration:none;';
-    btn.onmouseover = () => btn.style.transform = 'scale(1.1)';
-    btn.onmouseout = () => btn.style.transform = 'scale(1)';
-    document.body.appendChild(btn);
-}
-
-window.uploadToCloudinary = async function (file) {
-    if (!file) throw new Error("الملف غير موجود");
-
-    // Force 'auto' so Cloudinary puts PDFs in the 'image' bucket where transformations are permitted
-    let resourceType = 'auto';
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'professor');
-
-    const response = await fetch(`https://api.cloudinary.com/v1_1/dt1nytaju/${resourceType}/upload`, {
-        method: 'POST',
-        body: formData
-    });
-
-    if (!response.ok) {
-        let errJson = await response.json().catch(() => ({}));
-        let errMsg = (errJson.error && errJson.error.message) ? errJson.error.message : response.statusText;
-        throw new Error(`مشكلة في سيرفر الرفع (Cloudinary): ${errMsg}`);
-    }
-
-    const data = await response.json();
-    let url = data.secure_url;
-    if (data.resource_type === 'image' && data.format !== 'pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-        url = url.replace('/upload/', '/upload/f_auto,q_auto/');
-    }
-    return url;
-};
-
-
-
-window.uploadStudentFile = async function (e) {
-    e.preventDefault();
-    let user = JSON.parse(localStorage.getItem('spedia_currentUser'));
-    if (!user) return alert('خطأ في حسابك.');
-
-    const btn = document.getElementById('btn-sf-upload');
-    btn.innerText = 'جاري الرفع...';
-    try {
-        let file = document.getElementById('sf-file').files[0];
-        let fileUrl = await window.uploadToCloudinary(file);
-        let sFile = {
-            id: Date.now(),
-            studentCode: user.code,
-            studentName: user.name,
-            grade: user.grade,
-            title: document.getElementById('sf-title').value,
-            url: fileUrl,
-            date: new Date().toLocaleDateString('ar-EG')
-        };
-
-        if (window.fsData && window.fsData.addStudentFile) {
-            try { await window.fsData.addStudentFile(sFile); } catch (er) { }
-        }
-
-        let sFiles = JSON.parse(localStorage.getItem('spedia_student_files') || '[]');
-        sFiles.push(sFile);
-        localStorage.setItem('spedia_student_files', JSON.stringify(sFiles));
-
-        alert('تم إرسال الملف للإدارة بنجاح!');
-        e.target.reset();
-    } catch (err) {
-        alert('حدث خطأ في الرفع: ' + err.message);
-    }
-    btn.innerText = 'رفع وإرسال';
-};
+window.injectFBButton = function () { return; };
 
 window.sendStudentMessage = async function (e) {
     e.preventDefault();

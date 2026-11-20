@@ -20,9 +20,9 @@ window.fsData = {
     uploadFile: async (file, path) => {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('upload_preset', 'professor');
+        formData.append('upload_preset', 'ndpbz7az');
 
-        const response = await fetch('https://api.cloudinary.com/v1_1/dt1nytaju/auto/upload', {
+        const response = await fetch('https://api.cloudinary.com/v1_1/e5ytabug/auto/upload', {
             method: 'POST',
             body: formData
         });

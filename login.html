@@ -3,142 +3,164 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - Spedia</title>
-    <link rel="stylesheet" href="style.css?v=5">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
-        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>تسجيل الدخول - منصة professor التعليمية</title>
+    <link rel="stylesheet" href="style.css?v=12">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
+        .login-page {
+            min-height: 100vh;
+            display: flex;
             align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        .form-group label {
-            text-align: right;
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select {
+            justify-content: center;
+            padding: 20px 15px;
+            background: linear-gradient(135deg, #ebfcfa 0%, #f0f9ff 50%, #e0f2fe 100%);
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Tajawal', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(2, 132, 199, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            text-align: center;
+            box-sizing: border-box;
+            margin: auto;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 25px 18px;
+            }
         }
     </style>
 </head>
 
 <body class="login-page">
 
-    <div class="login-wrapper animate-on-scroll">
-        <div class="login-container">
-            <div class="login-header">
-                <a href="index.html" class="login-logo text-center"
-                    style="text-decoration:none; display:flex; flex-direction:column; align-items:center; gap:10px;">
-                    <img src="logo.jpg" alt="Logo"
-                        style="width:100px; height:100px; border-radius:50%; box-shadow:0 10px 20px rgba(0,0,0,0.1);">
-                    <div class="logo-text">
-                        <span class="ar" style="font-size:32px; font-weight:900; color:var(--primary-color);">منصة
-                            Professor</span>
-                    </div>
-                </a>
-                <h2 style="margin-top:15px;">أهلاً بك في منصتنا!</h2>
-                <p>سجل دخولك باستخدام كود الاشتراك</p>
+    <div class="login-card">
+        <div class="login-header" style="margin-bottom: 25px;">
+            <a href="index.html" style="display: inline-block; margin-bottom: 12px;">
+                <img src="logo.jpg" alt="Professor Logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); box-shadow: 0 6px 16px var(--primary-glow);">
+            </a>
+            <h2 style="font-size: 24px; font-weight: 900; color: var(--text-main); margin-bottom: 4px;">منصة professor التعليمية</h2>
+            <p style="font-size: 15px; color: var(--text-muted);">Prof. Ramy Elkhyat - Senior English Teacher</p>
+        </div>
+
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group" style="text-align: right; margin-bottom: 20px;">
+                <label for="code-input" style="display:block; margin-bottom: 8px; font-weight: 800; font-size: 14px;">كود الاشتراك</label>
+                <div class="input-icon-wrapper" style="position: relative;">
+                    <i class="fas fa-key" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px;"></i>
+                    <input type="text" id="code-input" placeholder="أدخل كود الاشتراك المسلّم لك من المعلم" autocomplete="off" required style="width: 100%; padding: 13px 40px 13px 15px; border: 1.5px solid var(--border-color); border-radius: 12px; font-size: 15px; box-sizing: border-box; background: #f8fafc;">
+                </div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 7px; display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-shield-alt" style="color: var(--primary);"></i> الدخول مقتصر فقط على الأكواد المعتمدة من المعلم.
+                </p>
             </div>
 
-            <form class="login-form" onsubmit="handleLogin(event)">
-                <div class="form-group" style="text-align:right">
-                    <label style="text-align:right; display:block;">كود الاشتراك</label>
-                    <div class="input-icon">
-                        <i class="fas fa-key"></i>
-                        <input type="text" id="code-input" placeholder="أدخل الكود أو اترك الحقل فارغاً"
-                            autocomplete="off">
-                    </div>
-                </div>
+            <button type="submit" class="btn-primary w-100" style="padding: 14px; font-size: 16px; width: 100%;">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول بكود الاشتراك
+            </button>
+        </form>
 
-                <button type="submit" class="btn-primary w-100 mt-20" style="font-size:18px;">تسجيل الدخول / مستخدم
-                    جديد</button>
-            </form>
+        <div class="login-footer" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">ليس لديك كود اشتراك أو ترغب في الاشتراك؟</p>
+            <button type="button" class="btn-whatsapp w-100" style="width: 100%; padding: 12px;" onclick="requestCode()">
+                <i class="fab fa-whatsapp" style="font-size: 18px;"></i> طلب كود اشتراك عبر واتساب
+            </button>
 
-            <div class="login-footer">
-                <p>ليس لديك كود اشتراك؟</p>
-                <button type="button" class="btn-primary w-100"
-                    style="background:#25D366; border:none; margin-top:10px;" onclick="requestCode()">
-                    <i class="fab fa-whatsapp"></i> طلب كود جديد
-                </button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 13px; font-weight: 700;">
+                <a href="index.html" style="color: var(--text-muted);">
+                    <i class="fas fa-arrow-right"></i> الرئيسية
+                </a>
+                <a href="#" onclick="promptAdmin(event)" style="color: var(--primary);">
+                    <i class="fas fa-user-shield"></i> لوحة الإدارة
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Register Modal -->
+    <!-- Registration Modal (Only for valid unused admin-generated codes) -->
     <div id="register-modal" class="modal">
         <div class="modal-content">
-            <h3 style="text-align:center; color:var(--primary-color); margin-bottom:20px;">استكمال البيانات</h3>
-            <p style="text-align:center; margin-bottom:15px; font-size:14px; color:#555;">أهلاً بك! يرجى استكمال بياناتك
-                لفتح الحساب.</p>
+            <button type="button" class="modal-close-btn" onclick="closeRegisterModal()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <h3 style="text-align:center; color:var(--primary); font-size: 22px; margin-bottom: 8px;">
+                <i class="fas fa-id-card"></i> تفعيل الاشتراك واستكمال البيانات
+            </h3>
+            <p style="text-align:center; font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">
+                تم التحقق من صحة الكود! يرجى إدخال بياناتك لربط الكود وتفعيل حسابك.
+            </p>
+
+            <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 12px; padding: 10px 15px; margin-bottom: 18px; text-align: center; color: #166534; font-weight: 800; font-size: 14px;">
+                <i class="fas fa-check-circle" style="color: #16a34a;"></i> كود الاشتراك المعتمد: <span id="modal-active-code" style="letter-spacing: 2px; font-weight: 900; font-size: 17px; color: #15803d; font-family: monospace;"></span>
+            </div>
+
             <form onsubmit="window.finishRegister(event)">
                 <div class="form-group">
-                    <label>الاسم الرباعي</label>
-                    <input type="text" id="reg-name" required placeholder="أدخل اسمك الكامل">
+                    <label for="reg-name">الاسم الرباعي للطالب</label>
+                    <input type="text" id="reg-name" required placeholder="مثال: أحمد محمد علي حسن">
                 </div>
+
                 <div class="form-group">
-                    <label>رقم الهاتف</label>
+                    <label for="reg-phone">رقم الهاتف (أو واتساب)</label>
                     <input type="tel" id="reg-phone" required placeholder="مثال: 01012345678">
                 </div>
 
                 <div class="form-group">
-                    <label>المرحلة / السنة الدراسية</label>
-                    <select id="reg-stage" required
-                        onchange="if(window.updateGrades) window.updateGrades(null, 'reg-stage', 'reg-grade')">
-                        <option value="">اختر المرحلة</option>
+                    <label for="reg-stage">المرحلة الدراسية</label>
+                    <select id="reg-stage" required onchange="if(window.updateGrades) window.updateGrades(null, 'reg-stage', 'reg-grade')">
+                        <option value="">اختر المرحلة الدراسية</option>
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label>الصف الدراسي</label>
+                    <label for="reg-grade">الصف الدراسي</label>
                     <select id="reg-grade" required>
                         <option value="">اختر المرحلة أولاً</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-primary w-100 mt-10">حفظ وبدء التعلم</button>
-                <button type="button" class="btn-icon"
-                    style="position:absolute; top:10px; left:10px; border:none; background:transparent;"
-                    onclick="closeRegisterModal()"><i class="fas fa-times"
-                        style="color:#d32f2f; font-size:20px;"></i></button>
+
+                <button type="submit" class="btn-primary w-100" style="padding: 13px; font-size: 16px; margin-top: 10px;">
+                    <i class="fas fa-check-circle"></i> تفعيل الحساب وبدء المذاكرة
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
+    <!-- Core Scripts -->
+    <script>
+        function promptAdmin(e) {
+            if (e) e.preventDefault();
+            if (window.promptAdmin) {
+                window.promptAdmin();
+            } else {
+                let pass = prompt("بوابة منصة professor التعليمية للإدارة - الرقم السري:");
+                if (pass === "135700") {
+                    sessionStorage.setItem('isAdmin', 'yes');
+                    sessionStorage.setItem('adminType', 'full');
+                    window.location.href = "admin.html";
+                } else if (pass === "246800") {
+                    sessionStorage.setItem('isAdmin', 'yes');
+                    sessionStorage.setItem('adminType', 'restricted');
+                    window.location.href = "admin.html";
+                } else if (pass !== null) {
+                    alert("الرقم السري غير صحيح!");
+                }
+            }
+        }
+    </script>
     <script type="module" src="firebase-init.js"></script>
     <script type="module" src="firebase-data.js"></script>
-    <script src="script.js"></script>
-    <script>
-        // Methods for fetching grades are loaded from script.js
-    </script>
+    <script src="script.js?v=12"></script>
 </body>
 
 </html>

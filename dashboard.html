@@ -3,307 +3,345 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>لوحة التحكم - منصة professor التعليمية</title>
-    <link rel="stylesheet" href="style.css?v=5">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=12">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .banner-img img {
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .subject-mini-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-right: 4px solid transparent;
-        }
-
-        .subject-mini-card:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            border-right-color: var(--primary-color);
-        }
-    </style>
 </head>
 
-<body class="dashboard-body" style="background:#f4f7fa;">
+<body class="dashboard-body">
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
     <div class="dashboard-layout">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar" style="border-left:1px solid #eef1f5;">
+        <!-- Sidebar Navigation Drawer -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <a href="index.html" class="logo"
-                    style="text-decoration:none; display:flex; align-items:center; gap:10px;">
-                    <img src="logo.jpg" alt="Logo"
-                        style="width: 35px; height: 35px; object-fit: cover; clip-path: circle(45%); border-radius: 50%; animation: none !important; transform: none !important;">
+                <a href="index.html" class="logo">
+                    <img src="logo.jpg" alt="Logo">
                     <div class="logo-text">
-                        <span class="ar" style="font-size: 24px; font-weight: 900; color: var(--primary-color);">منصة
-                            Professor</span>
+                        <span class="ar">منصة professor</span>
                     </div>
                 </a>
-                <button class="close-sidebar d-lg-none" onclick="toggleSidebar()">
+                <button type="button" class="btn-secondary d-md-none" style="padding: 6px 12px;" onclick="toggleSidebar()" title="إغلاق القائمة">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
-            <div class="user-profile-widget"
-                style="background:linear-gradient(180deg, #ffffff, #f9fbfc); border-bottom:none; margin:15px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.02);">
-                <div style="position:relative; display:inline-block; margin-bottom: 5px;">
-                    <input type="file" id="profile-upload" accept="image/*" style="display:none;"
-                        onchange="updateProfileImg(this)">
-                    <img id="sidebar-profile-img" src="logo.jpg" alt="Logo Profile"
-                        style="width:100px; height:100px; object-fit:cover; border-radius:50%; box-shadow:0 10px 20px rgba(0,0,0,0.15); clip-path: circle(45%); cursor:pointer; animation: none !important; transform: none !important;"
-                        onclick="document.getElementById('profile-upload').click()" title="تغيير الصورة">
-                    <i class="fas fa-camera"
-                        style="position:absolute; bottom:5px; right:5px; color:#121e33; font-size:18px; background:#fff; border-radius:50%; padding:5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor:pointer;"
-                        onclick="document.getElementById('profile-upload').click()"></i>
+            <!-- Profile Widget -->
+            <div class="user-profile-widget">
+                <div class="user-avatar-wrap">
+                    <input type="file" id="profile-upload" accept="image/*" style="display:none;" onchange="updateProfileImg(this)">
+                    <img id="sidebar-profile-img" src="logo.jpg" alt="Student Profile" onclick="document.getElementById('profile-upload').click()" title="انقر لتغيير صورتك">
+                    <div class="camera-badge" onclick="document.getElementById('profile-upload').click()" title="تغيير الصورة">
+                        <i class="fas fa-camera"></i>
+                    </div>
                 </div>
-                <div style="display:flex; justify-content:center; align-items:center; gap: 8px; margin-top:5px;">
-                    <h4 id="dash-name" style="font-size:20px; margin:0;">طالب منصة professor التعليمية</h4>
-                </div>
-                <p id="dash-grade" style="color:var(--primary-color); font-weight:700; font-size:16px;">الصف العاشر</p>
+                <h4 id="dash-name" style="font-size:18px; margin-bottom: 4px;">طالب متميز</h4>
+                <p id="dash-grade" style="color:var(--primary); font-weight:700; font-size:14px;">كود الطالب: ....</p>
             </div>
 
-            <ul class="sidebar-menu" style="padding:0 15px;">
-                <li class="active"><a href="#" onclick="showDashTab('dash-home', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-home"></i>
-                        <span>الرئيسية</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-required', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-list-ul"></i> <span>المطلوب
-                            (مهامك)</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-results', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-poll-h"></i>
-                        <span>النتائج</span></a></li>
-                <li><a href="#" onclick="registerAttendance()" style="border-radius:10px; margin-bottom:5px;"><i
-                            class="fas fa-user-check"></i> <span style="color:#4caf50; font-weight:700;">تسجيل حضور
-                            اليوم</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-my-courses', this)" style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-layer-group"></i> <span>كورساتي وكتبي</span></a></li>
-                <li><a href="explore.html" style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-book-open"></i>
-                        <span>تصفح جميع الكورسات</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-links', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-link"></i> <span>روابط
-                            الحصص</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-files', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-file-upload"></i> <span>المحتوى
-                            الورقي</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-custom', this)"
-                        style="border-radius:10px; margin-bottom:5px; background:linear-gradient(135deg, rgba(18,184,197,0.1), transparent);"><i
-                            class="fas fa-envelope-open-text" style="color:#12b8c5;"></i> <span
-                            style="font-weight:bold;">محتوى مخصص لي</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-messages', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-comments"></i> <span>الرسائل
-                            والتواصل</span></a></li>
-                <li><a href="#" onclick="showDashTab('dash-monthly-reports', this)"
-                        style="border-radius:10px; margin-bottom:5px;"><i class="fas fa-file-invoice"></i>
-                        <span>التقارير
-                            الشهرية</span></a></li>
-                <li class="menu-divider"></li>
-                <li><a href="javascript:void(0)" class="logout" onclick="logout()" style="border-radius:10px;"><i
-                            class="fas fa-sign-out-alt"></i> <span>تسجيل الخروج</span></a></li>
+            <!-- Navigation Links -->
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a href="#" onclick="showDashTab('dash-home', this)">
+                        <i class="fas fa-home"></i> <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-my-courses', this)">
+                        <i class="fas fa-layer-group"></i> <span>محاضراتي وكورساتي</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-required', this)">
+                        <i class="fas fa-tasks"></i> <span>الواجبات والاختبارات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="registerAttendance()">
+                        <i class="fas fa-user-check" style="color: #10b981;"></i> <span style="color:#10b981; font-weight:800;">تسجيل حضور اليوم</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-results', this)">
+                        <i class="fas fa-poll"></i> <span>نتائج الامتحانات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-files', this)">
+                        <i class="fas fa-file-pdf"></i> <span>المذكرات والملفات</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-links', this)">
+                        <i class="fas fa-video"></i> <span>روابط البث المباشر</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-messages', this)">
+                        <i class="fas fa-comments"></i> <span>محادثة المعلم</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="showDashTab('dash-monthly-reports', this)">
+                        <i class="fas fa-chart-line"></i> <span>التقرير الشهري</span>
+                    </a>
+                </li>
+                <li style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                    <a href="#" onclick="logout()" style="color: #ef4444;">
+                        <i class="fas fa-sign-out-alt" style="color: #ef4444;"></i> <span>تسجيل الخروج</span>
+                    </a>
+                </li>
             </ul>
         </aside>
 
-        <!-- Main Content -->
-        <main class="dashboard-main">
-            <!-- Header -->
-            <header class="dashboard-header" style="border-bottom:1px solid #eef1f5;">
-                <div class="header-left">
-                    <button class="open-sidebar d-lg-none" onclick="toggleSidebar()"
-                        style="background:#fff; border:1px solid #eee; padding:10px; border-radius:10px;"><i
-                            class="fas fa-bars"></i></button>
-                    <div class="search-bar" style="max-width:250px;">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="البحث السريع..."
-                            style="background:#f4f7fa; border:none; box-shadow:inset 0 2px 5px rgba(0,0,0,0.02);">
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <!-- Top Bar -->
+            <div class="dash-topbar">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button type="button" class="btn-secondary" onclick="toggleSidebar()" style="padding: 10px 14px; font-size: 18px;" title="القائمة الجانبية">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="dash-welcome">
+                        <h2 id="top-welcome-text">أهلاً بك في منصة professor 👋</h2>
+                        <p>استمر في المذاكرة والتفوق - طريقك نحو الدرجة النهائية</p>
                     </div>
                 </div>
-                <div class="header-right">
-                    <div style="position: relative; display: inline-block;">
-                        <button id="noti-btn" onclick="toggleNotifications(event)"
-                            style="background:transparent; border:none; font-size:24px; position:relative; cursor:pointer;"
-                            title="الإشعارات">
-                            <i class="fas fa-bell" style="color:var(--primary-dark);"></i>
-                            <span id="noti-badge"
-                                style="display:none; position:absolute; top:-5px; right:-5px; background:#f44336; color:#fff; font-size:10px; padding:2px 5px; border-radius:10px; font-weight:bold;">0</span>
-                        </button>
-                        <div id="noti-dropdown"
-                            style="display:none; position:absolute; top:40px; right:0; width:300px; background:#fff; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.1); z-index:1000; overflow:hidden;">
-                            <div style="padding:15px; background:#1e3c72; color:#fff; font-weight:bold;">الإشعارات</div>
-                            <div id="noti-list" style="max-height:300px; overflow-y:auto; padding:10px;"></div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button" class="btn-primary" onclick="registerAttendance()" style="padding: 9px 18px; font-size: 14px;">
+                        <i class="fas fa-check"></i> <span class="d-none d-sm-inline">تسجيل الحضور</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="logout()" title="تسجيل الخروج" style="padding: 9px 14px; color: #ef4444;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 1: Dashboard Home -->
+            <section id="dash-home" class="dash-tab-section">
+                <!-- Quick Stats -->
+                <div class="dash-quick-stats">
+                    <div class="dash-stat-box">
+                        <div class="dash-stat-icon" style="background: #e0f2fe; color: #0284c7;">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <h4 id="stat-courses-count" style="font-size: 22px; font-weight: 900;">0</h4>
+                            <p style="font-size: 13px; color: var(--text-muted); font-weight: 700;">محاضرة ومذكرة متاحة</p>
                         </div>
                     </div>
-                </div>
-            </header>
 
-            <div class="dashboard-content">
-                <div class="welcome-banner" style="box-shadow:0 15px 30px rgba(18,184,197,0.2);">
-                    <div class="banner-text">
-                        <h2 style="font-size:32px; margin-bottom: 10px;">مرحباً بك يا مبدع! Welcome <i
-                                class="fas fa-rocket" style="color:yellow; margin-right:10px;"></i></h2>
-                        <p style="font-size:18px; margin-bottom:25px;">مستعد تكتسح المنهج وتكون من الأوائل؟ إحنا معاك
-                            خطوة بخطوة.</p>
-                        <a href="explore.html" class="btn-primary"
-                            style="background:#fff; color:var(--primary-color); border-radius:15px; font-size:16px;">
-                            <i class="fas fa-book"></i> تصفح أحدث الكورسات بالنظام
-                        </a>
-                    </div>
-                    <div class="banner-img"
-                        style="background: transparent; border-radius: 50%; width: 220px; height: 220px; overflow: hidden; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 30px rgba(0,0,0,0.1);">
-                        <img src="logo.jpg" alt="Logo"
-                            style="width: 100%; height: 100%; object-fit: cover; clip-path: circle(45%); border-radius: 50%; animation: none !important; transform: none !important;">
-                    </div>
-                </div>
-
-                <div id="dash-home" class="dash-tab-section" style="display:block;">
-                    <div class="two-columns" style="gap:40px;">
-                        <div class="column">
-                            <h3 class="section-title"><i class="fas fa-bell" style="color:var(--primary-color);"></i>
-                                آخر التنبيهات</h3>
-                            <p style="color:#6a7c92; font-weight:bold;">لا توجد تنبيهات جديدة من الإدارة حالياً.</p>
-                        </div>
-                        <div class="column">
-                            <h3 class="section-title" style="color:#ff9800"><i class="fas fa-award"></i> لوحة التميز
-                                (تقييمات الأداء)</h3>
-                            <div id="student-evals">
-                                <!-- Populated dynamically via Admin -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="dash-my-courses" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-layer-group" style="color:var(--primary-color);"></i>
-                        كورساتي وكتبي (المحتوى المشترك به)</h3>
-                    <div id="student-my-courses" class="subject-mini-cards" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:20px;">
-                        <!-- Populated dynamically via Script -->
-                    </div>
-                </div>
-
-                <div id="dash-required" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-tasks" style="color:var(--primary-color);"></i>
-                        الامتحانات والواجبات والاختبارات القصيرة (المطلوب)</h3>
-                    <div id="student-exams" class="subject-mini-cards">
-                        <!-- Populated dynamically based on Grade -->
-                    </div>
-                </div>
-
-                <div id="dash-results" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title" style="color:#9c27b0"><i class="fas fa-poll-h"></i> إشعارات ونتائج
-                        الاختبارات</h3>
-                    <div id="student-results" class="subject-mini-cards">
-                        <!-- Populated dynamically via Admin -->
-                    </div>
-                </div>
-
-                <div id="dash-links" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-link" style="color:var(--primary-color);"></i> روابط
-                        الحصص المباشرة</h3>
-                    <div id="student-links-container" style="display:grid; gap:15px;"></div>
-                </div>
-
-                <div id="dash-files" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-file-download" style="color:var(--primary-color);"></i>
-                        المحتوى الورقي (من الإدارة)</h3>
-                    <div id="admin-files-container" style="display:grid; gap:15px; margin-bottom:40px;"></div>
-
-                    <h3 class="section-title"><i class="fas fa-file-upload" style="color:#ff9800;"></i> إرسال الواجب أو
-                        المحتوى الورقي</h3>
-                    <form onsubmit="window.uploadStudentFile(event)"
-                        style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                        <div class="form-group" style="margin-bottom:15px;">
-                            <label style="font-weight:bold; display:block; margin-bottom:8px;">العنوان / الوصف</label>
-                            <input type="text" id="sf-title" required
-                                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                        </div>
-                        <div class="form-group" style="margin-bottom:15px;">
-                            <label style="font-weight:bold; display:block; margin-bottom:8px;">اختر الملف</label>
-                            <input type="file" id="sf-file" accept="image/*,.pdf" required
-                                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                        </div>
-                        <button type="submit" id="btn-sf-upload" class="btn-primary w-100" style="width:100%;">رفع
-                            وإرسال</button>
-                    </form>
-                </div>
-
-                <div id="dash-custom" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-envelope-open-text"
-                            style="color:var(--primary-color);"></i>
-                        المحتوى المخصص لك</h3>
-                    <div id="student-custom-container" style="display:grid; gap:15px; margin-bottom:40px;"></div>
-                </div>
-
-                <div id="dash-messages" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-comments" style="color:var(--primary-color);"></i>
-                        الرسائل الواردة والتواصل</h3>
-                    <div id="student-messages-container" style="display:grid; gap:15px; margin-bottom:40px;"></div>
-
-                    <h3 class="section-title"><i class="fas fa-paper-plane" style="color:#9c27b0;"></i> إرسال رسالة
-                        للمعلم</h3>
-                    <form onsubmit="window.sendStudentMessage(event)"
-                        style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.05);">
-                        <div class="form-group" style="margin-bottom:15px;">
-                            <label style="font-weight:bold; display:block; margin-bottom:8px;">اسم المدرس (اكتبه
-                                يدوياً)</label>
-                            <input type="text" id="sm-teacher" required placeholder="مثال: أ. أحمد محمود"
-                                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;">
-                        </div>
-                        <div class="form-group" style="margin-bottom:15px;">
-                            <label style="font-weight:bold; display:block; margin-bottom:8px;">الرسالة /
-                                الاستفسار</label>
-                            <textarea id="sm-message" rows="4" required placeholder="اكتب رسالتك هنا..."
-                                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:10px;"></textarea>
-                        </div>
-                        <button type="submit" id="btn-sm-send" class="btn-primary w-100"
-                            style="width:100%; background:#9c27b0;">إرسال
-                            الرسالة</button>
-                    </form>
-                </div>
-
-                <div id="dash-monthly-reports" class="dash-tab-section" style="display:none;">
-                    <h3 class="section-title"><i class="fas fa-file-invoice" style="color:#9c27b0;"></i>
-                        التقارير الشهرية</h3>
-                    <div id="student-monthly-reports-container" style="display:grid; gap:15px; margin-bottom:40px;">
-                    </div>
-                </div>
-
-                <h3 class="section-title" style="margin-top:50px;"><i class="fas fa-chart-pie"
-                        style="color:#4caf50;"></i> إحصائيات النمو السريعة</h3>
-                <div class="stats-grid">
-                    <div class="stat-card animate-on-scroll"
-                        style="animation-delay:0.1s; border:1px solid #eee; transition:0.3s; cursor:pointer;"
-                        onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.05)';"
-                        onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
-                        <div class="icon" style="background:linear-gradient(135deg, #e8f5e9, #a5d6a7); color:#2e7d32;">
-                            <i class="fas fa-check-double"></i>
-                        </div>
-                        <div class="details">
-                            <h3 style="font-size:32px;">14</h3>
-                            <p style="font-weight:700;">درس تم إنجازه بامتياز</p>
-                        </div>
-                    </div>
-                    <div class="stat-card animate-on-scroll"
-                        style="animation-delay:0.3s; border:1px solid #eee; transition:0.3s; cursor:pointer;"
-                        onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.05)';"
-                        onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
-                        <div class="icon" style="background:linear-gradient(135deg, #e3f2fd, #90caf9); color:#1565c0;">
+                    <div class="dash-stat-box">
+                        <div class="dash-stat-icon" style="background: #dcfce7; color: #16a34a;">
                             <i class="fas fa-calendar-check"></i>
                         </div>
-                        <div class="details">
-                            <h3 id="stat-attendance-days" style="font-size:32px;">0</h3>
-                            <p style="font-weight:700;">عدد أيام الحضور والتفاعل</p>
+                        <div>
+                            <h4 id="stat-attendance-status" style="font-size: 18px; font-weight: 900; color: #16a34a;">لم يسجل</h4>
+                            <p style="font-size: 13px; color: var(--text-muted); font-weight: 700;">حضور اليوم</p>
+                        </div>
+                    </div>
+
+                    <div class="dash-stat-box">
+                        <div class="dash-stat-icon" style="background: #fef3c7; color: #d97706;">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 22px; font-weight: 900;">ممتاز</h4>
+                            <p style="font-size: 13px; color: var(--text-muted); font-weight: 700;">التقييم العام</p>
                         </div>
                     </div>
                 </div>
 
-            </div>
+                <!-- Latest Courses Section -->
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 19px; font-weight: 800;">
+                            <i class="fas fa-play-circle" style="color: var(--primary);"></i> أحدث المحاضرات والشروحات
+                        </h3>
+                        <a href="#" onclick="showDashTab('dash-my-courses')" style="color: var(--primary); font-size: 14px; font-weight: 700;">
+                            عرض الكل <i class="fas fa-arrow-left"></i>
+                        </a>
+                    </div>
+                    <div id="courses-grid" class="dash-cards-grid">
+                        <!-- Populated by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: My Courses & Lessons -->
+            <section id="dash-my-courses" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 25px;">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 15px;">
+                        <i class="fas fa-book-reader" style="color: var(--primary);"></i> المحاضرات والدروس
+                    </h3>
+                    <div id="all-courses-grid" class="dash-cards-grid">
+                        <!-- Courses injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Required Tasks & Homework -->
+            <section id="dash-required" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                        <i class="fas fa-clipboard-check" style="color: var(--primary);"></i> الواجبات والاختبارات المطلوبة
+                    </h3>
+                    <div id="required-tasks-list">
+                        <p class="text-muted" style="text-align:center; padding: 30px;">جاري تحميل المهام والواجبات...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Results & Grades -->
+            <section id="dash-results" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                        <i class="fas fa-chart-bar" style="color: var(--primary);"></i> نتائج الاختبارات والتقييمات
+                    </h3>
+                    <div class="table-responsive">
+                        <table id="table-student-results">
+                            <thead>
+                                <tr>
+                                    <th>عنوان الامتحان</th>
+                                    <th>تاريخ التسليم</th>
+                                    <th>الدرجة</th>
+                                    <th>التقييم وملاحظات المعلم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">لا توجد نتائج مسجلة حتى الآن</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: Live Links -->
+            <section id="dash-links" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                        <i class="fas fa-broadcast-tower" style="color: #ef4444;"></i> روابط الحصص المباشرة (Zoom / Teams)
+                    </h3>
+                    <div id="student-links-list">
+                        <p class="text-muted" style="text-align:center; padding: 30px;">لا توجد حصص مباشرة مجدولة حالياً.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 6: Files & PDFs -->
+            <section id="dash-files" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                        <i class="fas fa-file-pdf" style="color: #e11d48;"></i> المذكرات وأوراق العمل للتحميل
+                    </h3>
+                    <div id="student-files-list">
+                        <!-- Populated by script.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 7: Messages & Support -->
+            <section id="dash-messages" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); max-width: 700px; margin: 0 auto;">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 15px;">
+                        <i class="fas fa-envelope-open-text" style="color: var(--primary);"></i> إرسال رسالة أو سؤال للأستاذ
+                    </h3>
+                    <p class="text-muted" style="font-size: 14px; margin-bottom: 20px;">
+                        اكتب سؤالك أو استفسارك وسيصل مباشرة إلى الأستاذ رامي الخياط للرد عليك.
+                    </p>
+                    <form onsubmit="window.sendStudentMessage(event)">
+                        <div class="form-group">
+                            <label for="student-msg-text">رسالتك</label>
+                            <textarea id="student-msg-text" rows="4" required placeholder="اكتب سؤالك أو ملاحظتك هنا بالتفصيل..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-100">
+                            <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                        </button>
+                    </form>
+
+                    <div style="margin-top: 30px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                        <p style="font-weight: 700; margin-bottom: 10px;">أو تواصل فورياً عبر تطبيق واتساب:</p>
+                        <a href="https://wa.me/201016058274" target="_blank" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> فتح محادثة واتساب مع الأستاذ
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 8: Monthly Reports -->
+            <section id="dash-monthly-reports" class="dash-tab-section" style="display: none;">
+                <div style="background: #fff; padding: 25px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 20px;">
+                        <i class="fas fa-file-invoice" style="color: var(--primary);"></i> تقارير الأداء الشهرية
+                    </h3>
+                    <div id="monthly-reports-list">
+                        <p class="text-muted" style="text-align: center; padding: 30px;">سيتم تحديث التقرير الشهري بنهاية الشهر الحالي مع استمرار حضورك وحل الواجبات.</p>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <!-- Firebase SDKs -->
+    <!-- Mobile Bottom App Bar -->
+    <nav class="mobile-bottom-nav">
+        <ul>
+            <li>
+                <a href="#" onclick="showDashTab('dash-home'); return false;" class="active">
+                    <i class="fas fa-home"></i>
+                    <span>الرئيسية</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showDashTab('dash-my-courses'); return false;">
+                    <i class="fas fa-play-circle"></i>
+                    <span>محاضراتي</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showDashTab('dash-required'); return false;">
+                    <i class="fas fa-tasks"></i>
+                    <span>واجباتي</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="registerAttendance(); return false;">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <span style="color: #10b981;">حضور</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="showDashTab('dash-messages'); return false;">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>تواصل</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Video Modal Player -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px; padding: 20px;">
+            <button type="button" class="modal-close-btn" onclick="closeVideoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="video-modal-title" style="margin-bottom: 15px; font-size: 18px; font-weight: 800; text-align: right;"></h3>
+            <div id="video-player-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000;">
+                <!-- Iframe or Video tag injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
     <script type="module" src="firebase-init.js"></script>
     <script type="module" src="firebase-data.js"></script>
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=12"></script>
 </body>
 
 </html>
